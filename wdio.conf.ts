@@ -22,6 +22,9 @@ dotenv.config({
 // Get platform from environment variable (default: Android)
 const platform = process.env.PLATFORM || "Android";
 
+// Get maxInstances from environment (default: 1 for single device)
+const maxInstances = parseInt(process.env.MAX_INSTANCES || "1", 10);
+
 const appCapabilities = [
   {
     // capabilities for local Appium tests on an Android Emulator
@@ -88,7 +91,7 @@ export const config: WebdriverIO.Config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: 10,
+  maxInstances: maxInstances,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
