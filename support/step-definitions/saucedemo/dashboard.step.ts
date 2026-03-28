@@ -1,4 +1,4 @@
-import { Given, Then } from "@wdio/cucumber-framework";
+import { Given, When, Then } from "@wdio/cucumber-framework";
 import dashboardPage from "../../pages/saucedemo/dashboard.page.js";
 import {
   getUserCredentials,
@@ -31,6 +31,13 @@ Given("I launched the sauce demo app", async () => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
 });
 
-Then("I should see the dashboard title", async () => {
+Then("I should see the dashboard title on sauce demo app", async () => {
   await dashboardPage.validateDashboardPage();
 });
+
+When(
+  "I click the card product of {string} on dashboard sauce demo app",
+  async (name: string) => {
+    await dashboardPage.doClickCardProductName(name);
+  },
+);
