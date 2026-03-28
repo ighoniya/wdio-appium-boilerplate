@@ -10,11 +10,12 @@
     "@wdio/local-runner": "^9.27.0",
     "@wdio/spec-reporter": "^9.27.0",
     "appium-uiautomator2-driver": "^7.1.0",
+    "dotenv": "^17.3.1",
     "expect-webdriverio": "^5.6.5"
   },
   "scripts": {
     "wdio": "wdio run ./wdio.conf.ts",
-    "test:android": "PLATFORM=Android wdio run ./wdio.conf.ts",
-    "test:ios": "PLATFORM=iOS wdio run ./wdio.conf.ts"
+    "test:android": "ENV=production PLATFORM=Android wdio run ./wdio.conf.ts",
+    "test:ios": "ENV=staging PLATFORM=iOS wdio run ./wdio.conf.ts"
   }
 }

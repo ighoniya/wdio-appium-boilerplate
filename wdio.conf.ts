@@ -1,3 +1,24 @@
+import * as dotenv from "dotenv";
+import * as path from "path";
+import { fileURLToPath } from "url";
+
+// Polyfill __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load environment-specific .env file based on ENV variable
+// If no ENV is specified, load .env (contains sensitive secrets, not in git)
+// If ENV=staging, load .env.staging (can be in git)
+// If ENV=production, load .env.production (can be in git)
+const env = process.env.ENV;
+let envFile = ".env"; // Default to .env for security (secrets not in git)
+if (env) {
+  envFile = `.env.${env}`;
+}
+dotenv.config({
+  path: path.resolve(__dirname, "support/environment", envFile),
+});
+
 // Get platform from environment variable (default: Android)
 const platform = process.env.PLATFORM || "Android";
 

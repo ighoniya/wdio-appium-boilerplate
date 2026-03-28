@@ -31,6 +31,11 @@ export class PlatformBase {
   }
 }
 
+// Get any environment variable with optional default value
+export const getEnv = (key: string, defaultValue?: string): string => {
+  return process.env[key] || defaultValue || "";
+};
+
 // State store - simple object to hold shared data across scenarios/steps
 export const stateStore: Record<string, any> = {};
 
