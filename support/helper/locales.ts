@@ -1,4 +1,4 @@
-import { browser } from "@wdio/globals";
+import { browser, $ } from "@wdio/globals";
 import * as enLang from "../language/en.json";
 
 /**
@@ -24,10 +24,13 @@ export class PlatformBase {
 
   /**
    * Returns the appropriate selector based on the current platform
-   * @param selectors Object containing platform-specific selectors
+   * Wraps the selector string with $() to return an ElementReference
+   * @param selectors Object containing platform-specific selector strings
+   * @returns ElementReference for the current platform
    */
-  protected getSelector(selectors: { android: string; ios: string }): string {
-    return this.isAndroid ? selectors.android : selectors.ios;
+  protected getSelector(selectors: { android: string; ios: string }): ReturnType<typeof $> {
+    const selector = this.isAndroid ? selectors.android : selectors.ios;
+    return $(selector);
   }
 }
 
