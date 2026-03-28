@@ -1,11 +1,10 @@
 import { expect, $ } from "@wdio/globals";
-import { BasePage } from "../base.page.js";
-import { getPageTranslations } from "../../helper/locales.js";
+import { PlatformBase, getPageTranslations } from "../../helper/locales.js";
 
 /**
  * Page object for the Sauce Demo App dashboard
  */
-export class DashboardPage extends BasePage {
+export class DashboardPage extends PlatformBase {
   private texts = getPageTranslations("saucedemo", "dashboard_page");
 
   private selectors = {
