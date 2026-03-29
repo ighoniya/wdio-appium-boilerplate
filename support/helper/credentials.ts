@@ -20,7 +20,7 @@ export const getCredentials = (
   const environment = getEnvironment();
   const credentialsPath = path.resolve(
     __dirname,
-    `../../fixtures/credentials/${environment}/${credentialType}.json`,
+    `../fixtures/credentials/${environment}/${credentialType}.json`,
   );
 
   try {
