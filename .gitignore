@@ -1,4 +1,4 @@
 node_modules
 
 # env file
-support/environment/.env.*
+support/environment/.env.*.yaml

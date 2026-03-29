@@ -4,7 +4,7 @@ import {
   getUserCredentials,
   getCredentials,
 } from "../../helper/credentials.js";
-import { getEnv } from "../../helper/locales.js";
+import { getEnv } from "../../helper/env.js";
 
 Given("I launched the sauce demo app", async () => {
   // Verify environment config

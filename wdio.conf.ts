@@ -1,29 +1,16 @@
-import * as dotenv from "dotenv";
-import * as path from "path";
-import { fileURLToPath } from "url";
+import * as hooks from "./support/helper/hooks.ts";
 
-// Polyfill __dirname for ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Load environment-specific .env file based on ENV variable
-// If no ENV is specified, load .env (contains sensitive secrets, not in git)
-// If ENV=staging, load .env.staging (can be in git)
-// If ENV=production, load .env.production (can be in git)
-const env = process.env.ENV;
-let envFile = ".env"; // Default to .env for security (secrets not in git)
-if (env) {
-  envFile = `.env.${env}`;
-}
-dotenv.config({
-  path: path.resolve(__dirname, "support/environment", envFile),
-});
-
-// Get platform from environment variable (default: Android)
-const platform = process.env.PLATFORM || "Android";
+// Get value from hooks
+const platform = hooks.platform;
+const appName = hooks.appName;
+const appConfig = hooks.appConfig;
 
 // Get maxInstances from environment (default: 1 for single device)
 const maxInstances = parseInt(process.env.MAX_INSTANCES || "1", 10);
+
+console.log(`[wdio.config] Using app configuration: ${platform} / ${appName}`);
+console.log(`[wdio.config] App Path: ${appConfig.APP}`);
+console.log(`[wdio.config] App Package: ${appConfig.APP_PACKAGE}`);
 
 const appCapabilities = [
   {
@@ -33,8 +20,8 @@ const appCapabilities = [
     "appium:platformVersion": "14",
     "appium:automationName": "UiAutomator2",
     "appium:autoGrantPermissions": true,
-    "appium:appPackage": "",
-    "appium:app": ".app/android/saucedemo.apk",
+    "appium:appPackage": appConfig.APP_PACKAGE,
+    "appium:app": appConfig.APP,
   },
   {
     // capabilities for local Appium tests on an iOS Simulator
@@ -42,8 +29,8 @@ const appCapabilities = [
     "appium:deviceName": "iPhone 15",
     "appium:platformVersion": "17.0",
     "appium:automationName": "XCUITest",
-    "appium:appPackage": "",
-    "appium:app": ".app/ios/SauceDemo.app",
+    "appium:appPackage": appConfig.APP_PACKAGE,
+    "appium:app": appConfig.APP,
   },
 ].filter((cap) => cap.platformName === platform);
 
@@ -269,14 +256,14 @@ export const config: WebdriverIO.Config = {
    * @param {string}                   uri      path to feature file
    * @param {GherkinDocument.IFeature} feature  Cucumber feature object
    */
-  beforeFeature: require("./support/helper/hooks").beforeFeature,
+  beforeFeature: hooks.beforeFeature,
   /**
    *
    * Runs before a Cucumber Scenario.
    * @param {ITestCaseHookParameter} world    world object containing information on pickle and test step
    * @param {object}                 context  Cucumber World object
    */
-  beforeScenario: require("./support/helper/hooks").beforeScenario,
+  beforeScenario: hooks.beforeScenario,
   /**
    *
    * Runs before a Cucumber Step.
@@ -317,7 +304,7 @@ export const config: WebdriverIO.Config = {
    * @param {string}                   uri      path to feature file
    * @param {GherkinDocument.IFeature} feature  Cucumber feature object
    */
-  afterFeature: require("./support/helper/hooks").afterFeature,
+  afterFeature: hooks.afterFeature,
 
   /**
    * Runs after a WebdriverIO command gets executed

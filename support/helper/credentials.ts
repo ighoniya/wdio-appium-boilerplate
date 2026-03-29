@@ -1,7 +1,7 @@
-import fs from "fs";
-import path from "path";
+import * as fs from "fs";
+import * as path from "path";
 import { fileURLToPath } from "url";
-import { getEnv } from "./locales";
+import { getEnv } from "./env.js";
 
 // Polyfill __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);

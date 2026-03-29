@@ -1,4 +1,4 @@
-import { $ } from "@wdio/globals";
+import { driver, $ } from "@wdio/globals";
 import * as enLang from "../language/en.json";
 
 /**
@@ -11,15 +11,15 @@ export type Platform = "Android" | "iOS";
 export class PlatformBase {
   // Access SessionFlags properties via type assertion
   protected get platform(): Platform {
-    return (driver as any).isIOS ? "iOS" : "Android";
+    return driver.isIOS ? "iOS" : "Android";
   }
 
   protected get isAndroid(): boolean {
-    return (driver as any).isAndroid;
+    return driver.isAndroid;
   }
 
   protected get isIOS(): boolean {
-    return (driver as any).isIOS;
+    return driver.isIOS;
   }
 
   /**
@@ -36,11 +36,6 @@ export class PlatformBase {
     return $(selector);
   }
 }
-
-// Get any environment variable with optional default value
-export const getEnv = (key: string, defaultValue?: string): string => {
-  return process.env[key] || defaultValue || "";
-};
 
 // State store - simple object to hold shared data across scenarios/steps
 export const stateStore: Record<string, any> = {};
