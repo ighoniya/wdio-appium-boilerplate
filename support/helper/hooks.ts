@@ -5,8 +5,9 @@
  */
 
 import { driver } from "@wdio/globals";
-import { stateStore } from "./locales";
+import { stateStore, clearStateStore } from "./locales";
 import { getAppConfig } from "./env";
+import { screenshotOnFail } from "./screenshot";
 
 // Track scenario count within feature
 let scenarioCount = 0;
@@ -86,6 +87,20 @@ export const beforeScenario = async function (world: any): Promise<void> {
 };
 
 /**
+ * Runs after a Cucumber Scenario.
+ * Takes screenshot if scenario failed and attaches to Allure.
+ *
+ * @param {any}    world   world object containing pickle and test step
+ * @param {any}    result  results object containing scenario results
+ */
+export const afterScenario = async function (
+  world: any,
+  result: any,
+): Promise<void> {
+  await screenshotOnFail(result);
+};
+
+/**
  *
  * Runs after a Cucumber Feature.
  * Clears stateStore for this feature and resets scenario counter.
@@ -101,7 +116,7 @@ export const afterFeature = async function (
   scenarioCount = 0;
 
   // Clear all stateStore keys
-  Object.keys(stateStore).forEach((key) => delete stateStore[key]);
+  clearStateStore();
 
   console.log("Feature completed - cleaned up");
 };

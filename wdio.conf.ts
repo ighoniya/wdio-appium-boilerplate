@@ -1,4 +1,5 @@
 import * as hooks from "./support/helper/hooks.ts";
+import { getEnv } from "./support/helper/env.ts";
 
 // Get value from hooks
 const platform = hooks.platform;
@@ -158,7 +159,24 @@ export const config: WebdriverIO.Config = {
   // Test reporter for stdout.
   // The only one supported by default is 'dot'
   // see also: https://webdriver.io/docs/dot-reporter
-  reporters: ["spec"],
+  reporters: [
+    [
+      "allure",
+      {
+        outputDir: "allure-results",
+        disableWebdriverStepsReporting: true,
+        // disableWebdriverScreenshotsReporting: false,
+        useCucumberStepReporter: true,
+        reportedEnvironmentVars: {
+          platform_name: appCapabilities[0]?.platformName,
+          platform_version: appCapabilities[0]?.["appium:platformVersion"],
+          device_name: appCapabilities[0]?.["appium:deviceName"],
+          environment: getEnv("ENVIRONMENT"),
+        },
+      },
+    ],
+    "spec",
+  ],
 
   // If you are using Cucumber you need to specify the location of your step definitions.
   cucumberOpts: {
@@ -296,8 +314,7 @@ export const config: WebdriverIO.Config = {
    * @param {number}                 result.duration  duration of scenario in milliseconds
    * @param {object}                 context          Cucumber World object
    */
-  // afterScenario: function (world, result, context) {
-  // },
+  afterScenario: hooks.afterScenario,
   /**
    *
    * Runs after a Cucumber Feature.

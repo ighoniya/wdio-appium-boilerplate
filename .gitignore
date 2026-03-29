@@ -2,3 +2,6 @@ node_modules
 
 # env file
 support/environment/.env.*.yaml
+
+# allure
+allure*

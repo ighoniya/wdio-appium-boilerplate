@@ -40,6 +40,11 @@ export class PlatformBase {
 // State store - simple object to hold shared data across scenarios/steps
 export const stateStore: Record<string, any> = {};
 
+// State store - Clear all stateStore keys
+export const clearStateStore = (): void => {
+  Object.keys(stateStore).forEach((key) => delete stateStore[key]);
+};
+
 // Language constants
 export const languages = {
   en: enLang,
