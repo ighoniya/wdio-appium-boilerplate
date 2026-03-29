@@ -33,6 +33,7 @@ const appCapabilities = [
     "appium:platformVersion": "14",
     "appium:automationName": "UiAutomator2",
     "appium:autoGrantPermissions": true,
+    "appium:appPackage": "",
     "appium:app": ".app/android/saucedemo.apk",
   },
   {
@@ -41,6 +42,7 @@ const appCapabilities = [
     "appium:deviceName": "iPhone 15",
     "appium:platformVersion": "17.0",
     "appium:automationName": "XCUITest",
+    "appium:appPackage": "",
     "appium:app": ".app/ios/SauceDemo.app",
   },
 ].filter((cap) => cap.platformName === platform);
@@ -267,16 +269,14 @@ export const config: WebdriverIO.Config = {
    * @param {string}                   uri      path to feature file
    * @param {GherkinDocument.IFeature} feature  Cucumber feature object
    */
-  // beforeFeature: function (uri, feature) {
-  // },
+  beforeFeature: require("./support/helper/hooks").beforeFeature,
   /**
    *
    * Runs before a Cucumber Scenario.
    * @param {ITestCaseHookParameter} world    world object containing information on pickle and test step
    * @param {object}                 context  Cucumber World object
    */
-  // beforeScenario: function (world, context) {
-  // },
+  beforeScenario: require("./support/helper/hooks").beforeScenario,
   /**
    *
    * Runs before a Cucumber Step.
@@ -317,8 +317,7 @@ export const config: WebdriverIO.Config = {
    * @param {string}                   uri      path to feature file
    * @param {GherkinDocument.IFeature} feature  Cucumber feature object
    */
-  // afterFeature: function (uri, feature) {
-  // },
+  afterFeature: require("./support/helper/hooks").afterFeature,
 
   /**
    * Runs after a WebdriverIO command gets executed

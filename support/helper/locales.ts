@@ -1,4 +1,4 @@
-import { browser, $ } from "@wdio/globals";
+import { $ } from "@wdio/globals";
 import * as enLang from "../language/en.json";
 
 /**
@@ -11,15 +11,15 @@ export type Platform = "Android" | "iOS";
 export class PlatformBase {
   // Access SessionFlags properties via type assertion
   protected get platform(): Platform {
-    return (browser as any).isIOS ? "iOS" : "Android";
+    return (driver as any).isIOS ? "iOS" : "Android";
   }
 
   protected get isAndroid(): boolean {
-    return (browser as any).isAndroid;
+    return (driver as any).isAndroid;
   }
 
   protected get isIOS(): boolean {
-    return (browser as any).isIOS;
+    return (driver as any).isIOS;
   }
 
   /**
@@ -28,7 +28,10 @@ export class PlatformBase {
    * @param selectors Object containing platform-specific selector strings
    * @returns ElementReference for the current platform
    */
-  protected getSelector(selectors: { android: string; ios: string }): ReturnType<typeof $> {
+  protected getSelector(selectors: {
+    android: string;
+    ios: string;
+  }): ReturnType<typeof $> {
     const selector = this.isAndroid ? selectors.android : selectors.ios;
     return $(selector);
   }
