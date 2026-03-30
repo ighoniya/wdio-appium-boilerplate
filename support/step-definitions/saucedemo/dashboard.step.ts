@@ -5,6 +5,7 @@ import {
   getCredentials,
 } from "../../helper/credentials.js";
 import { getEnv } from "../../helper/env.js";
+import { driver } from "@wdio/globals";
 
 Given("I launched the sauce demo app", async () => {
   // Verify environment config
@@ -28,7 +29,8 @@ Given("I launched the sauce demo app", async () => {
   console.log("===============================");
 
   // Wait for app to fully load
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+  await driver.pause(3000);
 });
 
 Then("I should see the dashboard title on sauce demo app", async () => {
