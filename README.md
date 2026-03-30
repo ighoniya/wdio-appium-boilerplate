@@ -66,6 +66,17 @@ appium driver install xcuitest      # iOS
 
 ## Appium Inspector Configuration
 
+```bash
+# Devices check for Android
+adb devices
+
+# Devices check for iOS Simulator
+xcrun simctl list devices
+
+# Driver list for checking compatibility
+appium driver list
+```
+
 ### Android Capabilities
 
 ```json
