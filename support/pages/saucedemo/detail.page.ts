@@ -7,7 +7,7 @@ export class DetailPage extends PlatformBase {
   private selectors = {
     title: (name: string) => ({
       android: `//android.widget.TextView[contains(@resource-id,"productTV") and @text="${name}"]`,
-      ios: `-ios predicate string:name == "${name}"`,
+      ios: `//XCUIElementTypeStaticText[@name="${name}"]`,
     }),
   };
 

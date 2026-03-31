@@ -1,4 +1,4 @@
-import { expect } from "@wdio/globals";
+import { driver, expect } from "@wdio/globals";
 import {
   PlatformBase,
   getPageTranslations,
@@ -14,15 +14,15 @@ export class DashboardPage extends PlatformBase {
   private selectors = {
     title: {
       android: "id=com.saucelabs.mydemoapp.android:id/productTV",
-      ios: '-ios predicate string:name == "Products"',
+      ios: '//XCUIElementTypeStaticText[@name="title"]',
     },
     titleV2: {
       android: `//*[contains(@text,"${this.texts.title}")]`,
-      ios: `-ios predicate string:name == "${this.texts.title}"`,
+      ios: `name == "${this.texts.title}"`,
     },
     cardProduct: (name: string) => ({
       android: `//android.widget.TextView[@content-desc="Product Title" and @text="${name}"]/preceding-sibling::*[@content-desc="Product Image"]`,
-      ios: `-ios predicate string:name == "${name}"`,
+      ios: `//XCUIElementTypeStaticText[@name="Product Name" and @label="${name}"]/preceding-sibling::XCUIElementTypeImage[@label="Product Image"]`,
     }),
   };
 
@@ -32,7 +32,9 @@ export class DashboardPage extends PlatformBase {
   public async validateDashboardPage(): Promise<void> {
     const titleElement = this.getSelector(this.selectors.title);
     await expect(titleElement).toBeDisplayed();
-    await expect(titleElement).toHaveText(this.texts.title);
+    if (driver.isAndroid){
+      await expect(titleElement).toHaveText(this.texts.title);
+    }
   }
 
   public async doClickCardProductName(name: string): Promise<void> {

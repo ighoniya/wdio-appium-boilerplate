@@ -27,8 +27,8 @@ const appCapabilities = [
   {
     // capabilities for local Appium tests on an iOS Simulator
     platformName: "iOS",
-    "appium:deviceName": "iPhone 15",
-    "appium:platformVersion": "17.0",
+    "appium:deviceName": "iPhone 16e",
+    "appium:platformVersion": "26.3",
     "appium:automationName": "XCUITest",
     "appium:appPackage": appConfig.APP_PACKAGE,
     "appium:app": appConfig.APP,

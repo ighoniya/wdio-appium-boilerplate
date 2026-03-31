@@ -2,7 +2,7 @@
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![WebdriverIO](https://img.shields.io/badge/WebdriverIO-9.27-red)](https://webdriver.io)
-[![Appium](https://img.shields.io/badge/Appium-2.0-blue)](https://appium.io)
+[![Appium](https://img.shields.io/badge/Appium-3.0-blue)](https://appium.io)
 [![BDD](https://img.shields.io/badge/BDD-Gherkin-orange)](https://cucumber.io/docs/gherkin/)
 
 A standardized Appium WebDriverIO test automation framework for mobile application testing using TypeScript and BDD (Cucumber) on Android and iOS platforms.
@@ -27,6 +27,7 @@ Install these extensions for better productivity:
 - Node.js (v18 or higher)
 - npm or yarn
 - Java (for Appium)
+- Appium Inspector 2026 or newest
 
 ### Android Setup
 
@@ -53,15 +54,17 @@ npm install -g appium
 # Install drivers
 appium driver install uiautomator2  # Android
 appium driver install xcuitest      # iOS
+appium driver install --source=npm appium-flutter-driver # Flutter
 ```
 
 ---
 
 ## Appium Server Configuration
 
-- **Host:** `0.0.0.0`
-- **Port:** `4723`
-
+```bash
+# Run with terminal for Appium V3 or newest (Recommend)
+appium --address 127.0.0.1 --port 4723 --base-path /wd/hub
+```
 ---
 
 ## Appium Inspector Configuration
@@ -92,8 +95,8 @@ appium driver list
 
 ```json
 {
-  "appium:deviceName": "iPhone 15",
-  "appium:platformVersion": "17.0",
+  "appium:deviceName": "iPhone 16e",
+  "appium:platformVersion": "26.3",
   "platformName": "iOS",
   "appium:automationName": "XCUITest"
 }

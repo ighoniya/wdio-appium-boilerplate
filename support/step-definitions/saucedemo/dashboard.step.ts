@@ -6,6 +6,7 @@ import {
 } from "../../helper/credentials.js";
 import { getEnv } from "../../helper/env.js";
 import { driver } from "@wdio/globals";
+import { convertProductName } from "../../helper/plugins.js";
 
 Given("I launched the sauce demo app", async () => {
   // Verify environment config
@@ -40,6 +41,7 @@ Then("I should see the dashboard title on sauce demo app", async () => {
 When(
   "I click the card product of {string} on dashboard sauce demo app",
   async (name: string) => {
+    name = convertProductName(name)
     await dashboardPage.doClickCardProductName(name);
   },
 );
